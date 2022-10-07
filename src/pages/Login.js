@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { salvarEmail } from '../redux/actions';
 
@@ -32,6 +31,7 @@ class Login extends React.Component {
   };
 
   onClickChange = async () => {
+    const { history } = this.props;
     const { saveEmailToHash } = this.props;
     const { email, name } = this.state;
     saveEmailToHash(email, name);
@@ -39,6 +39,7 @@ class Login extends React.Component {
     const data = await response.json();
     const token = await data.token;
     localStorage.setItem('token', token);
+    history.push('/game');
   };
 
   render() {
@@ -67,16 +68,14 @@ class Login extends React.Component {
         >
           Configurar
         </button>
-        <Link to="/game">
-          <button
-            type="button"
-            disabled={ btnDisabled }
-            data-testid="btn-play"
-            onClick={ this.onClickChange }
-          >
-            Play
-          </button>
-        </Link>
+        <button
+          type="button"
+          disabled={ btnDisabled }
+          data-testid="btn-play"
+          onClick={ this.onClickChange }
+        >
+          Play
+        </button>
       </form>
     );
   }
