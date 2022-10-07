@@ -55,10 +55,6 @@ class Login extends React.Component {
           onChange={ this.handleChange }
           data-testid="input-gravatar-email"
         />
-
-        <button type="button" disabled={ btnDisabled } data-testid="btn-play">
-          Play
-        </button>
         <button
           type="button"
           data-testid="btn-settings"
