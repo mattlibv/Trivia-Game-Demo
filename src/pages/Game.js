@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   state = {
@@ -41,6 +42,7 @@ class Game extends React.Component {
       history.push('/');
     }
     return (
+      <Header />
       <div className="game-container">
         <div className="question">
           <h3 data-testid="question-category">{ question.category }</h3>
