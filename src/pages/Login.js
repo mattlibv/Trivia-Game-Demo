@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
@@ -37,6 +38,7 @@ class Login extends React.Component {
 
   render() {
     const { btnDisabled } = this.state;
+    const { history } = this.props;
     return (
       <form>
         <input
@@ -53,6 +55,17 @@ class Login extends React.Component {
           onChange={ this.handleChange }
           data-testid="input-gravatar-email"
         />
+
+        <button type="button" disabled={ btnDisabled } data-testid="btn-play">
+          Play
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => history.push('/config') }
+        >
+          Configurar
+        </button>
         <Link to="/game">
           <button
             type="button"
@@ -69,3 +82,9 @@ class Login extends React.Component {
 }
 
 export default Login;
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
