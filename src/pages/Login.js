@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   state = {
@@ -30,10 +29,12 @@ class Login extends React.Component {
   };
 
   onClickChange = async () => {
+    const { history } = this.props;
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const data = await response.json();
     const token = await data.token;
     localStorage.setItem('token', token);
+    history.push('/game');
   };
 
   render() {
@@ -62,16 +63,14 @@ class Login extends React.Component {
         >
           Configurar
         </button>
-        <Link to="/game">
-          <button
-            type="button"
-            disabled={ btnDisabled }
-            data-testid="btn-play"
-            onClick={ this.onClickChange }
-          >
-            Play
-          </button>
-        </Link>
+        <button
+          type="button"
+          disabled={ btnDisabled }
+          data-testid="btn-play"
+          onClick={ this.onClickChange }
+        >
+          Play
+        </button>
       </form>
     );
   }
