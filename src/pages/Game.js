@@ -42,33 +42,35 @@ class Game extends React.Component {
       history.push('/');
     }
     return (
-      <Header />
-      <div className="game-container">
-        <div className="question">
-          <h3 data-testid="question-category">{ question.category }</h3>
-          <h4 data-testid="question-text">{ question.question }</h4>
-          <div data-testid="answer-options">
-            { randomOptions.map((element, index) => {
-              if (element === correctAnswer) {
+      <>
+        <Header />
+        <div className="game-container">
+          <div className="question">
+            <h3 data-testid="question-category">{ question.category }</h3>
+            <h4 data-testid="question-text">{ question.question }</h4>
+            <div data-testid="answer-options">
+              { randomOptions.map((element, index) => {
+                if (element === correctAnswer) {
+                  return (
+                    <button type="button" data-testid="correct-answer">
+                      { element }
+                    </button>
+                  );
+                }
                 return (
-                  <button type="button" data-testid="correct-answer">
+                  <button
+                    type="button"
+                    key={ index }
+                    data-testid={ `wrong-answer-${index}` }
+                  >
                     { element }
                   </button>
                 );
-              }
-              return (
-                <button
-                  type="button"
-                  key={ index }
-                  data-testid={ `wrong-answer-${index}` }
-                >
-                  { element }
-                </button>
-              );
-            }) }
+              }) }
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
