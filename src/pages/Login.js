@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   state = {
@@ -27,6 +28,13 @@ class Login extends React.Component {
     }, () => this.checkLength());
   };
 
+  onClickChange = async () => {
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const data = await response.json();
+    const token = await data.token;
+    localStorage.setItem('token', token);
+  };
+
   render() {
     const { btnDisabled } = this.state;
     return (
@@ -45,9 +53,16 @@ class Login extends React.Component {
           onChange={ this.handleChange }
           data-testid="input-gravatar-email"
         />
-        <button type="button" disabled={ btnDisabled } data-testid="btn-play">
-          Play
-        </button>
+        <Link to="/game">
+          <button
+            type="button"
+            disabled={ btnDisabled }
+            data-testid="btn-play"
+            onClick={ this.onClickChange }
+          >
+            Play
+          </button>
+        </Link>
       </form>
     );
   }
