@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { salvarEmail } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -30,6 +32,9 @@ class Login extends React.Component {
   };
 
   onClickChange = async () => {
+    const { saveEmailToHash } = this.props;
+    const { email, name } = this.state;
+    saveEmailToHash(email, name);
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const data = await response.json();
     const token = await data.token;
@@ -77,10 +82,17 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+function mapDispatchToProps(dispatch) {
+  return {
+    saveEmailToHash: (email, name) => dispatch(salvarEmail(email, name)),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  saveEmailToHash: PropTypes.func.isRequired,
 };
