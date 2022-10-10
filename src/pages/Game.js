@@ -10,6 +10,8 @@ class Game extends React.Component {
       incorrect_answers: [],
       correct_answer: [],
     },
+    inx: 0,
+    questions: [],
     anwsered: false,
   };
 
@@ -26,9 +28,20 @@ class Game extends React.Component {
       this.setState({
         logged: true,
         question: data.results[0],
+        questions: [...data.results],
       });
     }
   }
+
+  handleQuestions = () => {
+    const { inx, questions } = this.state;
+    const nums = inx + 1;
+    this.setState({
+      inx: nums,
+      question: questions[nums],
+      anwsered: false,
+    });
+  };
 
   handleChoice = () => {
     this.setState({
@@ -82,6 +95,16 @@ class Game extends React.Component {
                   </button>
                 );
               }) }
+              {anwsered
+                ? (
+                  <button
+                    type="button"
+                    data-testid="btn-next"
+                    onClick={ this.handleQuestions }
+                  >
+                    Next
+                  </button>
+                ) : null}
             </div>
           </div>
         </div>
