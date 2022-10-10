@@ -1,0 +1,13 @@
+.correctAnswer {
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(6, 240, 15);
+
+}
+
+.incorrectAnswer {
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(255, 0, 0);
+}
+
