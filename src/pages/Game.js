@@ -13,6 +13,9 @@ class Game extends React.Component {
     inx: 0,
     questions: [],
     anwsered: false,
+    time: 30,
+    btnDisable: false,
+    ids: 0,
   };
 
   async componentDidMount() {
@@ -31,8 +34,16 @@ class Game extends React.Component {
         questions: [...data.results],
       });
     }
+    this.crono();
   }
 
+  crono = () => {
+    const func = () => this.setState((state) => ({
+      time: state.time - 1,
+    }));
+    const ids = setInterval(() => func(), Number('1000'));
+    this.setState({ ids });
+    
   handleQuestions = () => {
     const { inx, questions } = this.state;
     const nums = inx + 1;
@@ -49,8 +60,17 @@ class Game extends React.Component {
     });
   };
 
+  updateTimer = () => {
+    const { time, ids } = this.state;
+    if (time === 1) {
+      clearTimeout(ids);
+      this.setState({ btnDisable: true });
+    }
+  };
+
   render() {
-    const { logged, question, anwsered } = this.state;
+    this.updateTimer();
+    const { logged, question, anwsered, time, btnDisable } = this.state;
     const {
       incorrect_answers: incorrectAnswers,
       correct_answer: correctAnswer } = question;
@@ -66,11 +86,12 @@ class Game extends React.Component {
       <>
         <Header />
         <div className="game-container">
+          <p>{time}</p>
           <div className="question">
-            <h3 data-testid="question-category">{ question.category }</h3>
-            <h4 data-testid="question-text">{ question.question }</h4>
+            <h3 data-testid="question-category">{question.category}</h3>
+            <h4 data-testid="question-text">{question.question}</h4>
             <div data-testid="answer-options">
-              { randomOptions.map((element, index) => {
+              {randomOptions.map((element, index) => {
                 if (element === correctAnswer) {
                   return (
                     <button
@@ -78,6 +99,7 @@ class Game extends React.Component {
                       data-testid="correct-answer"
                       className={ anwsered ? 'correctAnswer' : undefined }
                       onClick={ this.handleChoice }
+                      disabled={ btnDisable }
                     >
                       {element}
                     </button>
@@ -90,10 +112,14 @@ class Game extends React.Component {
                     data-testid={ `wrong-answer-${index}` }
                     className={ anwsered ? 'incorrectAnswer' : undefined }
                     onClick={ this.handleChoice }
+                    disabled={ btnDisable }
                   >
-                    { element }
+                    {element}
                   </button>
                 );
+
+              })}
+
               }) }
               {anwsered
                 ? (
@@ -105,6 +131,7 @@ class Game extends React.Component {
                     Next
                   </button>
                 ) : null}
+
             </div>
           </div>
         </div>
