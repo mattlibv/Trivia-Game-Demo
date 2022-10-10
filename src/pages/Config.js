@@ -9,7 +9,3 @@ export default class Config extends Component {
     );
   }
 }
-
-
-
-//details
