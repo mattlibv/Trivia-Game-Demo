@@ -10,6 +10,8 @@ class Game extends React.Component {
       incorrect_answers: [],
       correct_answer: [],
     },
+    inx: 0,
+    questions: [],
     anwsered: false,
     time: 30,
     btnDisable: false,
@@ -29,6 +31,7 @@ class Game extends React.Component {
       this.setState({
         logged: true,
         question: data.results[0],
+        questions: [...data.results],
       });
     }
     this.crono();
@@ -40,6 +43,15 @@ class Game extends React.Component {
     }));
     const ids = setInterval(() => func(), Number('1000'));
     this.setState({ ids });
+    
+  handleQuestions = () => {
+    const { inx, questions } = this.state;
+    const nums = inx + 1;
+    this.setState({
+      inx: nums,
+      question: questions[nums],
+      anwsered: false,
+    });
   };
 
   handleChoice = () => {
@@ -105,7 +117,21 @@ class Game extends React.Component {
                     {element}
                   </button>
                 );
+
               })}
+
+              }) }
+              {anwsered
+                ? (
+                  <button
+                    type="button"
+                    data-testid="btn-next"
+                    onClick={ this.handleQuestions }
+                  >
+                    Next
+                  </button>
+                ) : null}
+
             </div>
           </div>
         </div>
