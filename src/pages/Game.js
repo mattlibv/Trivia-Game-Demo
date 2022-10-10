@@ -43,7 +43,8 @@ class Game extends React.Component {
     }));
     const ids = setInterval(() => func(), Number('1000'));
     this.setState({ ids });
-    
+  };
+
   handleQuestions = () => {
     const { inx, questions } = this.state;
     const nums = inx + 1;
@@ -62,7 +63,7 @@ class Game extends React.Component {
 
   updateTimer = () => {
     const { time, ids } = this.state;
-    if (time === 1) {
+    if (time === 0) {
       clearTimeout(ids);
       this.setState({ btnDisable: true });
     }
@@ -117,9 +118,6 @@ class Game extends React.Component {
                     {element}
                   </button>
                 );
-
-              })}
-
               }) }
               {anwsered
                 ? (
@@ -139,7 +137,6 @@ class Game extends React.Component {
     );
   }
 }
-
 export default Game;
 
 Game.propTypes = {
