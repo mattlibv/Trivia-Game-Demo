@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import '../styles/Game.css';
 
 class Game extends React.Component {
   state = {
@@ -9,6 +10,7 @@ class Game extends React.Component {
       incorrect_answers: [],
       correct_answer: [],
     },
+    anwsered: false,
   };
 
   async componentDidMount() {
@@ -28,8 +30,14 @@ class Game extends React.Component {
     }
   }
 
+  handleChoice = () => {
+    this.setState({
+      anwsered: true,
+    });
+  };
+
   render() {
-    const { logged, question } = this.state;
+    const { logged, question, anwsered } = this.state;
     const {
       incorrect_answers: incorrectAnswers,
       correct_answer: correctAnswer } = question;
@@ -52,8 +60,13 @@ class Game extends React.Component {
               { randomOptions.map((element, index) => {
                 if (element === correctAnswer) {
                   return (
-                    <button type="button" data-testid="correct-answer">
-                      { element }
+                    <button
+                      type="button"
+                      data-testid="correct-answer"
+                      className={ anwsered ? 'correctAnswer' : undefined }
+                      onClick={ this.handleChoice }
+                    >
+                      {element}
                     </button>
                   );
                 }
@@ -62,6 +75,8 @@ class Game extends React.Component {
                     type="button"
                     key={ index }
                     data-testid={ `wrong-answer-${index}` }
+                    className={ anwsered ? 'incorrectAnswer' : undefined }
+                    onClick={ this.handleChoice }
                   >
                     { element }
                   </button>
