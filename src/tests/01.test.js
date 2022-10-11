@@ -17,7 +17,7 @@ describe("Testando telas iniciais.", () => {
     }
     test('Teste', async () => {
         renderWithRouterAndRedux(<App />);
-        const mockAPICall = jest.spyOn(window, 'fetch').mockReturnValue({
+        const mockAPICall = jest.spyOn(global, 'fetch').mockResolvedValue({
         json: jest.fn().mockResolvedValue(mockToken),
         });
         userEvent.type(screen.getByTestId('input-player-name'), 'teste');
