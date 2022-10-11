@@ -96,8 +96,8 @@ class Game extends React.Component {
 
   render() {
     this.updateTimer();
-    const { logged, question, anwsered, time, btnDisable, randomizor, questions
-    } = this.state;
+    const { logged, question, anwsered, time,
+      btnDisable, randomizor, questions } = this.state;
     const {
       incorrect_answers: incorrectAnswers,
       correct_answer: correctAnswer } = question;
