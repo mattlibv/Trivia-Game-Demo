@@ -93,49 +93,93 @@ const mockQuestion = {
     const next1 = await screen.findByTestId(btnNext);
     userEvent.click(next1);
     await screen.findByTestId('question-text');
+    // PERGUNTA 2:
     userEvent.click(await screen.findByTestId(correct));
     const next2 = await screen.findByTestId(btnNext);
     userEvent.click(next2);
     await screen.findByTestId('question-text');
+    // PERGUNTA 3:
     userEvent.click(await screen.findByTestId(correct));
     const next3 = await screen.findByTestId(btnNext);
     userEvent.click(next3);
     await screen.findByTestId('question-text');
+    // PERGUNTA 4:
     userEvent.click(await screen.findByTestId(correct));
     const next4 = await screen.findByTestId(btnNext);
     userEvent.click(next4);
     await screen.findByTestId('question-text');
+    // PERGUNTA 5:
     userEvent.click(await screen.findByTestId(correct));
     const next5 = await screen.findByTestId(btnNext);
     userEvent.click(next5);
     await screen.findByTestId('feedback-text');
-    debug();
-    // waitFor(() => expect(screen.findByRole('button', {name: Next})).toBeInTheDocument());
-    // userEvent.click(await screen.findByTestId(btnNext));
-    // // PERGUNTA 2:
-    // userEvent.click(await screen.findByTestId(correct));
-    // waitFor(() => expect(screen.findByRole('button', {name: Next})).toBeInTheDocument());
-    // userEvent.click(await screen.findByTestId(btnNext));
-    // // PERGUNTA 3:
-    // userEvent.click(await screen.findByTestId(correct));
-    // waitFor(() => expect(screen.findByRole('button', {name: Next})).toBeInTheDocument());
-    // userEvent.click(await screen.findByTestId(btnNext));
-    // // PERGUNTA 4:
-    // userEvent.click(await screen.findByTestId(correct));
-    // waitFor(() => expect(screen.findByRole('button', {name: Next})).toBeInTheDocument());
-    // userEvent.click(await screen.findByTestId(btnNext));
-    // // PERGUNTA 5:
-    // userEvent.click(await screen.findByTestId(correct));
-    // waitFor(() => expect(screen.findByRole('button', {name: Next})).toBeInTheDocument());
-    // userEvent.click(await screen.findByTestId(btnNext));
     // // TELA DE FEEDBACK
-    // await waitFor(() => {
-    //   const feedbackTxt = screen.getByTestId('feedback-text');
-    //   expect(feedbackTxt.innerText).toBe('Well Done!');
-    // });
-    // const totalScore = screen.getByTestId('feedback-total-score');
-    // expect(totalScore.innerText).toBe('5');
-    // const totalAssertions = screen.getByTestId('feedback-total-question');
-    // expect(totalAssertions.innerText).toBe('5');
+    const feedbackTxt = await screen.findByTestId('feedback-text');
+    expect(feedbackTxt.innerHTML).toBe('Well Done!');
+    const totalScore = await screen.findByTestId('feedback-total-score');
+    expect(totalScore.innerHTML).toBe('350');
+    const totalAssertions = await screen.findByTestId('feedback-total-question');
+    expect(totalAssertions.innerHTML).toBe('5');
+    userEvent.click(await screen.findByTestId('btn-play-again'));
+    const newGameButton = await screen.findByTestId('btn-play');
+    expect(newGameButton).toBeDefined();
   });
+  test('Testa um jogo com erros', async () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+    const mockAPICall = jest.spyOn(global, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockQuestion),
+    })
+    .mockResolvedValueOnce({
+    json: jest.fn().mockResolvedValueOnce(mockToken),
+    });
+    userEvent.type(screen.getByTestId('input-player-name'), 'teste');
+    userEvent.type(screen.getByTestId('input-gravatar-email'), 'teste@teste.com');
+    await waitFor(() => userEvent.click(screen.getByTestId('btn-play')));
+    await waitFor(() => expect(history.location.pathname).toBe("/game"));
+    const wrong = /wrong-answer../i;
+    const btnNext = 'btn-next';
+    // PERGUNTA 1:
+    await screen.findByTestId('question-text');
+    userEvent.click(await screen.findByTestId(wrong));
+    const next1 = await screen.findByTestId(btnNext);
+    userEvent.click(next1);
+    await screen.findByTestId('question-text');
+    // PERGUNTA 2:
+    const wrong2 = await screen.findAllByTestId(wrong);
+    userEvent.click(wrong2[0]);
+    const next2 = await screen.findByTestId(btnNext);
+    userEvent.click(next2);
+    await screen.findByTestId('question-text');
+    // PERGUNTA 3:
+    const wrong3 = await screen.findAllByTestId(wrong);
+    userEvent.click(wrong3[0]);
+    const next3 = await screen.findByTestId(btnNext);
+    userEvent.click(next3);
+    await screen.findByTestId('question-text');
+    // PERGUNTA 4:
+    const wrong4 = await screen.findAllByTestId(wrong);
+    userEvent.click(wrong4[0]);
+    const next4 = await screen.findByTestId(btnNext);
+    userEvent.click(next4);
+    await screen.findByTestId('question-text');
+    // PERGUNTA 5:
+    const wrong5 = await screen.findAllByTestId(wrong);
+    userEvent.click(wrong5[0]);
+    const next5 = await screen.findByTestId(btnNext);
+    userEvent.click(next5);
+    const notGood = await screen.findByTestId('feedback-text');
+    expect(notGood.innerHTML).toBe('Could be better...');
+    const totalScore = await screen.findByTestId('feedback-total-score');
+    expect(totalScore.innerHTML).toBe('0');
+    const totalAssertions = await screen.findByTestId('feedback-total-question');
+    expect(totalAssertions.innerHTML).toBe('0');
+    const rankingBtn = await screen.findByTestId('btn-ranking');
+    userEvent.click(rankingBtn);
+    const player = await screen.findByTestId('player-name-0');
+    expect(player.innerHTML).toBe('teste');
+    const newGame = await screen.findByTestId('btn-go-home');
+    userEvent.click(newGame);
+    screen.findByTestId('btn-play');
+    waitFor(() => expect(history.location.pathname).toBe("/"));
+  })
 });
