@@ -5,3 +5,9 @@ export const salvarEmail = (email, name) => ({
   email,
   name,
 });
+
+export const SAVE_POINTS = 'SAVE_POINTS';
+export const savePoints = (score) => ({
+  type: SAVE_POINTS,
+  score,
+});

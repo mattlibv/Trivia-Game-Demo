@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import saveHash from './SalvarEmail';
+import player from './player';
 
-const rootReducer = combineReducers({ saveHash });
+const rootReducer = combineReducers({ player });
 
 export default rootReducer;
