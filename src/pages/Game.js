@@ -50,7 +50,6 @@ class Game extends React.Component {
 
   handleQuestions = () => {
     const { inx, questions } = this.state;
-    console.log(inx);
     const { history } = this.props;
     const MAX_INX = 4;
     if (inx === MAX_INX) {
