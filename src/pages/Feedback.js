@@ -14,7 +14,26 @@ class Feedback extends React.Component {
     if (assertions >= THREE) {
       this.setState({ wellDone: true });
     }
+    this.configLocalStorage();
   }
+
+  configLocalStorage = () => {
+    const { player: { name, score, hash } } = this.props;
+    if (!localStorage.getItem('ranking')) {
+      localStorage.setItem('ranking', JSON.stringify([{
+        name,
+        score,
+        picture: `https://www.gravatar.com/avatar/${hash}`,
+      }]));
+    } else {
+      const oldArray = JSON.parse(localStorage.getItem('ranking'));
+      localStorage.setItem('ranking', JSON.stringify([...oldArray, {
+        name,
+        score,
+        picture: `https://www.gravatar.com/avatar/${hash}`,
+      }]));
+    }
+  };
 
   displayRanking = () => {
     const { history } = this.props;
@@ -35,7 +54,6 @@ class Feedback extends React.Component {
         <h5 data-testid="feedback-text">
           {wellDone ? 'Well Done!' : 'Could be better...'}
         </h5>
-        ;
         <h5 data-testid="feedback-total-score">
           {score}
         </h5>

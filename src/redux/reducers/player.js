@@ -1,5 +1,5 @@
 import md5 from 'crypto-js/md5';
-import { SALVAR_HASH, SAVE_POINTS } from '../actions';
+import { RESET, SALVAR_HASH, SAVE_POINTS } from '../actions';
 
 const INITIAL_STATE = {
   hash: '',
@@ -22,6 +22,8 @@ const player = (state = INITIAL_STATE, action) => {
       assertions: state.assertions + 1,
       score: state.score + action.score,
     };
+  case RESET:
+    return INITIAL_STATE;
   default:
     return state;
   }
