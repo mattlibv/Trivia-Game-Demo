@@ -15,6 +15,11 @@ class Feedback extends React.Component {
     }
   }
 
+  displayRanking = () => {
+    const { history } = this.props;
+    history.push('/ranking');
+  };
+
   render() {
     const { wellDone } = this.state;
     const { assertions, score } = this.props;
@@ -23,7 +28,7 @@ class Feedback extends React.Component {
         <h5 data-testid="feedback-text">
           {wellDone ? 'Well Done!' : 'Could be better...'}
         </h5>
-        );
+        ;
         <h5 data-testid="feedback-total-score">
           {' '}
           {score}
@@ -34,6 +39,13 @@ class Feedback extends React.Component {
           {assertions}
           {' '}
         </h5>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ this.displayRanking }
+        >
+          Ranking
+        </button>
       </div>
     );
   }
