@@ -23,7 +23,6 @@ class Feedback extends React.Component {
         <h5 data-testid="feedback-text">
           {wellDone ? 'Well Done!' : 'Could be better...'}
         </h5>
-        );
         <h5 data-testid="feedback-total-score">
           {' '}
           {score}

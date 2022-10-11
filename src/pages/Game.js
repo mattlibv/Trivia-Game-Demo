@@ -50,6 +50,7 @@ class Game extends React.Component {
 
   handleQuestions = () => {
     const { inx, questions } = this.state;
+    console.log(inx);
     const { history } = this.props;
     const MAX_INX = 4;
     if (inx === MAX_INX) {
@@ -95,7 +96,8 @@ class Game extends React.Component {
 
   render() {
     this.updateTimer();
-    const { logged, question, anwsered, time, btnDisable, randomizor } = this.state;
+    const { logged, question, anwsered, time, btnDisable, randomizor, questions
+    } = this.state;
     const {
       incorrect_answers: incorrectAnswers,
       correct_answer: correctAnswer } = question;
@@ -114,7 +116,7 @@ class Game extends React.Component {
           <p>{time}</p>
           <div className="question">
             <h3 data-testid="question-category">{question.category}</h3>
-            <h4 data-testid="question-text">{question.question}</h4>
+            {questions.length && <h4 data-testid="question-text">{question.question}</h4>}
             <div data-testid="answer-options">
               {randomOptions.map((element, index) => {
                 if (element === correctAnswer) {
