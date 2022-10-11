@@ -14,10 +14,13 @@ class Feedback extends React.Component {
       this.setState({ wellDone: true });
     }
   }
-
+  
   displayRanking = () => {
     const { history } = this.props;
     history.push('/ranking');
+  restartGame = () => {
+    const { history } = this.props;
+    history.push('/')
   };
 
   render() {
@@ -30,14 +33,10 @@ class Feedback extends React.Component {
         </h5>
         ;
         <h5 data-testid="feedback-total-score">
-          {' '}
           {score}
-          {' '}
         </h5>
         <h5 data-testid="feedback-total-question">
-          {' '}
           {assertions}
-          {' '}
         </h5>
         <button
           type="button"
@@ -45,6 +44,10 @@ class Feedback extends React.Component {
           onClick={ this.displayRanking }
         >
           Ranking
+          data-testid="btn-play-again"
+          onClick={ this.restartGame }
+        >
+          Play Again
         </button>
       </div>
     );
