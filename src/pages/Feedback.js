@@ -14,13 +14,15 @@ class Feedback extends React.Component {
       this.setState({ wellDone: true });
     }
   }
-  
+
   displayRanking = () => {
     const { history } = this.props;
     history.push('/ranking');
+  };
+
   restartGame = () => {
     const { history } = this.props;
-    history.push('/')
+    history.push('/');
   };
 
   render() {
@@ -44,6 +46,9 @@ class Feedback extends React.Component {
           onClick={ this.displayRanking }
         >
           Ranking
+        </button>
+        <button
+          type="button"
           data-testid="btn-play-again"
           onClick={ this.restartGame }
         >
