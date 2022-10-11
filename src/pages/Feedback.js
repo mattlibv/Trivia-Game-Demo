@@ -14,10 +14,13 @@ class Feedback extends React.Component {
       this.setState({ wellDone: true });
     }
   }
+
   render() {
     const { wellDone } = this.state;
     return (
-      <h5 data-testid="feedback-text">{wellDone ? 'Well Done!' : 'Could be better...'}</h5>
+      <h5 data-testid="feedback-text">
+        {wellDone ? 'Well Done!' : 'Could be better...'}
+      </h5>
     );
   }
 }
