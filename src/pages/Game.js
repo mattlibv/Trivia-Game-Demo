@@ -1,5 +1,7 @@
+import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { savePoints } from '../redux/actions';
 import Header from '../components/Header';
 import '../styles/Game.css';
 
@@ -16,6 +18,7 @@ class Game extends React.Component {
     time: 30,
     btnDisable: false,
     ids: 0,
+    randomizor: Math.random(),
   };
 
   async componentDidMount() {
@@ -47,17 +50,35 @@ class Game extends React.Component {
 
   handleQuestions = () => {
     const { inx, questions } = this.state;
+    const { history } = this.props;
+    const MAX_INX = 4;
+    if (inx === MAX_INX) {
+      history.push('/feedback');
+    }
     const nums = inx + 1;
     this.setState({
       inx: nums,
       question: questions[nums],
       anwsered: false,
+      time: 30,
     });
   };
 
-  handleChoice = () => {
+  handleChoice = ({ target }) => {
+    const { question, time } = this.state;
+    const { savePointsAndAssertions } = this.props;
     this.setState({
       anwsered: true,
+    }, () => {
+      const diffCoef = {
+        easy: 1,
+        medium: 2,
+        hard: 3,
+      };
+      if (target.className === 'correctAnswer') {
+        const POINT_COEF = 10;
+        savePointsAndAssertions(POINT_COEF + (time * diffCoef[question.difficulty]));
+      }
     });
   };
 
@@ -65,20 +86,23 @@ class Game extends React.Component {
     const { time, ids } = this.state;
     if (time === 0) {
       clearTimeout(ids);
-      this.setState({ btnDisable: true });
+      this.setState({
+        btnDisable: true,
+        anwsered: true,
+      });
     }
   };
 
   render() {
     this.updateTimer();
-    const { logged, question, anwsered, time, btnDisable } = this.state;
+    const { logged, question, anwsered, time, btnDisable, randomizor } = this.state;
     const {
       incorrect_answers: incorrectAnswers,
       correct_answer: correctAnswer } = question;
     const { history } = this.props;
     const options = [...incorrectAnswers, correctAnswer];
     const dot5 = 0.5;
-    const randomOptions = options.sort(() => Math.random() - dot5);
+    const randomOptions = options.sort(() => randomizor - dot5);
     if (!logged) {
       localStorage.clear();
       history.push('/');
@@ -101,6 +125,7 @@ class Game extends React.Component {
                       className={ anwsered ? 'correctAnswer' : undefined }
                       onClick={ this.handleChoice }
                       disabled={ btnDisable }
+                      key={ index }
                     >
                       {element}
                     </button>
@@ -137,10 +162,16 @@ class Game extends React.Component {
     );
   }
 }
-export default Game;
 
 Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  savePointsAndAssertions: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  savePointsAndAssertions: (score) => dispatch(savePoints(score)),
+});
+
+export default connect(null, mapDispatchToProps)(Game);
