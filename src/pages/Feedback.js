@@ -17,20 +17,38 @@ class Feedback extends React.Component {
 
   render() {
     const { wellDone } = this.state;
+    const { assertions, score } = this.props;
     return (
-      <h5 data-testid="feedback-text">
-        {wellDone ? 'Well Done!' : 'Could be better...'}
-      </h5>
+      <div>
+        <h5 data-testid="feedback-text">
+          {wellDone ? 'Well Done!' : 'Could be better...'}
+        </h5>
+        );
+        <h5 data-testid="feedback-total-score">
+          {' '}
+          {score}
+          {' '}
+        </h5>
+        <h5 data-testid="feedback-total-question">
+          {' '}
+          {assertions}
+          {' '}
+        </h5>
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
   player: state.player,
+  assertions: state.player.assertions,
+  score: state.player.score,
 });
 
 Feedback.propTypes = {
   player: PropTypes.object,
+  assertions: PropTypes.number,
+  score: PropTypes.number,
 }.isRequired;
 
 export default connect(mapStateToProps)(Feedback);
