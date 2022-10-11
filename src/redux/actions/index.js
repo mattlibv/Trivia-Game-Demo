@@ -11,3 +11,8 @@ export const savePoints = (score) => ({
   type: SAVE_POINTS,
   score,
 });
+
+export const RESET = 'RESET';
+export const reset = () => ({
+  type: RESET,
+});
