@@ -93,4 +93,26 @@ describe('Testes de game', () => {
     await waitFor(() => expect(history.location.pathname).toBe("/game"));
     await waitFor(() => expect(history.location.pathname).toBe("/"));
   });
+  jest.setTimeout(40000);
+  it('Testa um timeout de resposta', async () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+    const mockAPICall = jest.spyOn(global, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockQuestion),
+    })
+    .mockResolvedValueOnce({
+    json: jest.fn().mockResolvedValueOnce(mockToken),
+    });
+    userEvent.type(screen.getByTestId('input-player-name'), 'teste');
+    userEvent.type(screen.getByTestId('input-gravatar-email'), 'teste@teste.com');
+    userEvent.click(await screen.findByTestId('btn-play'));
+    await waitFor(() => expect(history.location.pathname).toBe("/game"));
+    jest.spyOn(global, 'clearTimeout');
+    await screen.findAllByTestId(/wrong-answer../i);
+    const timedOutBtns = await screen.findAllByRole('button');
+    expect(timedOutBtns).toHaveLength(2);
+    await new Promise((r) => setTimeout(r, 32000));
+    const answer = await screen.findByTestId('correct-answer');
+    waitFor (() => expect(answer).toBeDisabled());
+    waitFor (async () => expect(await screen.findByTestId('time-stamp')).toBe(0));
+  });
 });
