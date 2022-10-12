@@ -112,7 +112,7 @@ class Game extends React.Component {
       <>
         <Header />
         <div className="game-container">
-          <p>{time}</p>
+          <p data-testid="time-stamp">{time}</p>
           <div className="question">
             <h3 data-testid="question-category">{question.category}</h3>
             {questions.length && <h4 data-testid="question-text">{question.question}</h4>}
