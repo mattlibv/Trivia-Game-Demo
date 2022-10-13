@@ -114,5 +114,7 @@ describe('Testes de game', () => {
     const answer = await screen.findByTestId('correct-answer');
     waitFor (() => expect(answer).toBeDisabled());
     waitFor (async () => expect(await screen.findByTestId('time-stamp')).toBe(0));
+    userEvent.click(screen.getByTestId('btn-next'));
+    waitFor (async () => expect(await screen.findByTestId('time-stamp')).toBe(30));
   });
 });
