@@ -1,3 +1,25 @@
+<<<<<<< Updated upstream
+=======
+.game-container {
+  color: rgb(30, 35, 46);
+}
+
+.question {
+  text-align: center;
+}
+
+.timer {
+  background-color: slategrey;
+  border: 2px groove #d9b208;
+  border-radius: 10px;
+  color: #f6cd13;
+  font-weight: 800;
+  margin-left: 20px;
+  padding: 10px;
+  width: fit-content;
+}
+
+>>>>>>> Stashed changes
 .correctAnswer {
   border-color: rgb(6, 240, 15);
   border-style: solid;
