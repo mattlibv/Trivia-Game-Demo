@@ -10,6 +10,16 @@ class Login extends React.Component {
     btnDisabled: true,
   };
 
+  componentDidMount() {
+    if (localStorage.getItem('userConfig') === null) {
+      localStorage.setItem('userConfig', JSON.stringify({
+        category: 'any',
+        difficulty: 'any',
+        type: 'any',
+      }));
+    }
+  }
+
   checkLength = () => {
     const { email, name } = this.state;
     if (email.length > 0 && name.length > 0) {
