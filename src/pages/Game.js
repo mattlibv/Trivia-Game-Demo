@@ -23,7 +23,19 @@ class Game extends React.Component {
 
   async componentDidMount() {
     const token = localStorage.getItem('token');
-    const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+    const userConfig = JSON.parse(localStorage.getItem('userConfig'));
+    const { category, difficulty, type } = userConfig;
+    const link = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    if (category !== 'any') {
+      link.concat(`&category=${category}`);
+    }
+    if (difficulty !== 'any') {
+      link.concat(`&difficulty=${difficulty}`);
+    }
+    if (type !== 'any') {
+      link.concat(`&type=${type}`);
+    }
+    const response = await fetch(link);
     const data = await response.json();
     if (data.response_code === Number('3')) {
       this.setState({
@@ -61,6 +73,11 @@ class Game extends React.Component {
     const MAX_INX = 4;
     if (inx === MAX_INX) {
       history.push('/feedback');
+      localStorage.setItem('userConfig', JSON.stringify({
+        category: 'any',
+        difficulty: 'any',
+        type: 'any',
+      }));
     }
     const nums = inx + 1;
     this.resetClock();
