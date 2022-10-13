@@ -48,6 +48,13 @@ class Game extends React.Component {
     this.setState({ ids });
   };
 
+  resetClock = () => {
+    const { time } = this.state;
+    if (time === 0) {
+      this.crono();
+    }
+  };
+
   handleQuestions = () => {
     const { inx, questions } = this.state;
     const { history } = this.props;
@@ -56,11 +63,14 @@ class Game extends React.Component {
       history.push('/feedback');
     }
     const nums = inx + 1;
+    this.resetClock();
     this.setState({
       inx: nums,
       question: questions[nums],
       anwsered: false,
+      btnDisable: false,
       time: 30,
+      randomizor: Math.random(),
     });
   };
 
