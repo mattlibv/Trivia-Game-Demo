@@ -25,6 +25,7 @@ class Game extends React.Component {
     const token = localStorage.getItem('token');
     const userConfig = JSON.parse(localStorage.getItem('userConfig'));
     const { category, difficulty, type } = userConfig;
+    // faz o link para o fetch
     let link = `https://opentdb.com/api.php?amount=5&token=${token}`;
     if (category !== 'any') {
       link = link.concat(`&category=${category}`);
