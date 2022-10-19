@@ -117,9 +117,9 @@ const mockQuestion = {
     const feedbackTxt = await screen.findByTestId('feedback-text');
     expect(feedbackTxt.innerHTML).toBe('Well Done!');
     const totalScore = await screen.findByTestId('feedback-total-score');
-    expect(totalScore.innerHTML).toBe('350');
+    expect(totalScore.innerHTML).toBe('Sua pontuação: 350');
     const totalAssertions = await screen.findByTestId('feedback-total-question');
-    expect(totalAssertions.innerHTML).toBe('5');
+    expect(totalAssertions.innerHTML).toBe('Número de acertos: 5');
     userEvent.click(await screen.findByTestId('btn-play-again'));
     const newGameButton = await screen.findByTestId('btn-play');
     expect(newGameButton).toBeDefined();
@@ -170,13 +170,13 @@ const mockQuestion = {
     const notGood = await screen.findByTestId('feedback-text');
     expect(notGood.innerHTML).toBe('Could be better...');
     const totalScore = await screen.findByTestId('feedback-total-score');
-    expect(totalScore.innerHTML).toBe('0');
+    expect(totalScore.innerHTML).toBe('Sua pontuação: 0');
     const totalAssertions = await screen.findByTestId('feedback-total-question');
-    expect(totalAssertions.innerHTML).toBe('0');
+    expect(totalAssertions.innerHTML).toBe('Número de acertos: 0');
     const rankingBtn = await screen.findByTestId('btn-ranking');
     userEvent.click(rankingBtn);
     const player = await screen.findByTestId('player-name-0');
-    expect(player.innerHTML).toBe('teste');
+    expect(player.innerHTML).toBe('Jogador(a): teste');
     const newGame = await screen.findByTestId('btn-go-home');
     userEvent.click(newGame);
     screen.findByTestId('btn-play');

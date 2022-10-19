@@ -1,0 +1,27 @@
+.btn-new {
+  margin-left: 45%;
+  margin-right: 45%;
+  padding: 15px 12px;
+  width: 10%;
+}
+
+label {
+  color: bisque;
+}
+
+select, option {
+  color: slategrey;
+}
+
+h1 {
+  color: rgb(221, 213, 213);
+  text-align: center;
+}
+
+.settings-container {
+  align-items: center;
+  display: flex;
+  justify-items: center;
+  width: 100%;
+}
+

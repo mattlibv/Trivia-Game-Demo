@@ -25,16 +25,15 @@ class Game extends React.Component {
     const token = localStorage.getItem('token');
     const userConfig = JSON.parse(localStorage.getItem('userConfig'));
     const { category, difficulty, type } = userConfig;
-    // faz o link para o fetch
-    let link = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const link = `https://opentdb.com/api.php?amount=5&token=${token}`;
     if (category !== 'any') {
-      link = link.concat(`&category=${category}`);
+      link.concat(`&category=${category}`);
     }
     if (difficulty !== 'any') {
-      link = link.concat(`&difficulty=${difficulty}`);
+      link.concat(`&difficulty=${difficulty}`);
     }
     if (type !== 'any') {
-      link = link.concat(`&type=${type}`);
+      link.concat(`&type=${type}`);
     }
     const response = await fetch(link);
     const data = await response.json();
@@ -121,6 +120,22 @@ class Game extends React.Component {
     }
   };
 
+  decoder = (str) => {
+    const element = document.createElement('div');
+    function decodeHTMLEntities() {
+      if (str && typeof str === 'string') {
+        // limpa script/html tags
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+      }
+      return str;
+    }
+    return decodeHTMLEntities();
+  };
+
   render() {
     this.updateTimer();
     const { logged, question, anwsered, time,
@@ -140,10 +155,17 @@ class Game extends React.Component {
       <>
         <Header />
         <div className="game-container">
-          <p data-testid="time-stamp">{time}</p>
+          <h4 className="timer">
+            {`Tempo: ${time}s`}
+          </h4>
           <div className="question">
             <h3 data-testid="question-category">{question.category}</h3>
-            {questions.length && <h4 data-testid="question-text">{question.question}</h4>}
+            {questions.length
+              && (
+                <h4 data-testid="question-text">
+                  { this.decoder(question.question) }
+                </h4>
+              )}
             <div data-testid="answer-options">
               {randomOptions.map((element, index) => {
                 if (element === correctAnswer) {
@@ -151,12 +173,12 @@ class Game extends React.Component {
                     <button
                       type="button"
                       data-testid="correct-answer"
-                      className={ anwsered ? 'correctAnswer' : undefined }
+                      className={ anwsered ? 'correctAnswer' : 'answer-btn' }
                       onClick={ this.handleChoice }
                       disabled={ btnDisable }
                       key={ index }
                     >
-                      {element}
+                      {this.decoder(element)}
                     </button>
                   );
                 }
@@ -165,17 +187,18 @@ class Game extends React.Component {
                     type="button"
                     key={ index }
                     data-testid={ `wrong-answer-${index}` }
-                    className={ anwsered ? 'incorrectAnswer' : undefined }
+                    className={ anwsered ? 'incorrectAnswer' : 'answer-btn' }
                     onClick={ this.handleChoice }
                     disabled={ btnDisable }
                   >
-                    {element}
+                    {this.decoder(element)}
                   </button>
                 );
               }) }
               {anwsered
                 ? (
                   <button
+                    className="btn-next success"
                     type="button"
                     data-testid="btn-next"
                     onClick={ this.handleQuestions }

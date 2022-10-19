@@ -8,9 +8,9 @@
 
 .timer {
   background-color: slategrey;
-  border: 2px groove #d9b208;
+  border: 2px groove #D9B208;
   border-radius: 10px;
-  color: #f6cd13;
+  color: #F6CD13;
   font-weight: 800;
   margin-left: 20px;
   padding: 10px;
@@ -27,4 +27,14 @@
   border-color: red;
   border-style: solid;
   border-width: 3px;
+}
+
+.btn-next {
+  margin-left: 15px;
+  padding: 12px;
+}
+
+button {
+  background-color: coral;
+  margin-right: 5px;
 }

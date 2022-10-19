@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import '../styles/Feedback.css';
 
 class Feedback extends React.Component {
   state = {
@@ -51,29 +52,35 @@ class Feedback extends React.Component {
     return (
       <div>
         <Header />
-        <h5 data-testid="feedback-text">
-          {wellDone ? 'Well Done!' : 'Could be better...'}
-        </h5>
-        <h5 data-testid="feedback-total-score">
-          {score}
-        </h5>
-        <h5 data-testid="feedback-total-question">
-          {assertions}
-        </h5>
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ this.displayRanking }
-        >
-          Ranking
-        </button>
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.restartGame }
-        >
-          Play Again
-        </button>
+        <div className="feedback card">
+          <h3 data-testid="feedback-text" style={ { fontWeight: '900' } }>
+            {wellDone ? 'Well Done!' : 'Could be better...'}
+          </h3>
+          <h4 data-testid="feedback-total-score">
+            {`Sua pontuação: ${score}`}
+          </h4>
+          <h4 data-testid="feedback-total-question">
+            {`Número de acertos: ${assertions}`}
+          </h4>
+        </div>
+        <div className="ranking-btns">
+          <button
+            type="button"
+            className="error"
+            data-testid="btn-ranking"
+            onClick={ this.displayRanking }
+          >
+            Ranking
+          </button>
+          <button
+            type="button"
+            className="success"
+            data-testid="btn-play-again"
+            onClick={ this.restartGame }
+          >
+            Play Again
+          </button>
+        </div>
       </div>
     );
   }
