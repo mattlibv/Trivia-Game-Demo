@@ -1,0 +1,32 @@
+h1 {
+  color: rgb(221, 213, 213);
+  text-align: center;
+}
+
+.ranking-container {
+  background-color: rgb(155, 169, 184);
+  border: 2px solid steelblue;
+  border-radius: 4%;
+  color: rgb(216, 230, 241);
+  display: inline-table;
+  justify-items: center;
+  margin: 5px;
+  table-layout: fixed;
+  text-align: center;
+  width: 31%;
+}
+
+.avatar {
+  margin-left: 5px;
+  margin-top: 5px;
+  position: relative;
+  width: 90px;
+}
+
+.restart-container {
+  text-align: center;
+}
+
+.restart {
+  padding: 17px 15px;
+}

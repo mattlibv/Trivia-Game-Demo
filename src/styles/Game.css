@@ -1,3 +1,22 @@
+.game-container {
+  color: rgb(30, 35, 46);
+}
+
+.question {
+  text-align: center;
+}
+
+.timer {
+  background-color: slategrey;
+  border: 2px groove #D9B208;
+  border-radius: 10px;
+  color: #F6CD13;
+  font-weight: 800;
+  margin-left: 20px;
+  padding: 10px;
+  width: fit-content;
+}
+
 .correctAnswer {
   border-color: rgb(6, 240, 15);
   border-style: solid;
@@ -8,4 +27,14 @@
   border-color: red;
   border-style: solid;
   border-width: 3px;
+}
+
+.btn-next {
+  margin-left: 15px;
+  padding: 12px;
+}
+
+button {
+  background-color: coral;
+  margin-right: 5px;
 }

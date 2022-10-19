@@ -1,0 +1,28 @@
+body {
+  background-color: #3185fc;
+}
+
+.loginForm-container {
+  align-items: center;
+  background-color: #035add;
+  border: 3px groove #0e71fb;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  left: 26%;
+  padding: 30px;
+  position: relative;
+  right: 26%;
+  top: 160px;
+  width: 48%;
+}
+
+label {
+  color: #a6b8d3;
+  font-family: Gill Sans , Gill Sans MT , Calibri , Trebuchet MS , sans-serif;
+  font-weight: 600;
+}
+
+input {
+  color: darkslategrey;
+}

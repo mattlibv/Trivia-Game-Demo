@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { salvarEmail, reset } from '../redux/actions';
+import '../styles/Login.css';
 
 class Login extends React.Component {
   state = {
@@ -22,7 +23,9 @@ class Login extends React.Component {
 
   checkLength = () => {
     const { email, name } = this.state;
-    if (email.length > 0 && name.length > 0) {
+    const Regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailCheck = (Regex.test(email));
+    if (email.length && name.length && emailCheck) {
       this.setState({
         btnDisabled: false,
       });
@@ -57,37 +60,53 @@ class Login extends React.Component {
     const { btnDisabled } = this.state;
     const { history } = this.props;
     return (
-      <form>
-        <input
-          type="text"
-          placeholder="Insira seu nome"
-          name="name"
-          onChange={ this.handleChange }
-          data-testid="input-player-name"
-        />
-        <input
-          type="email"
-          placeholder="Insira seu email"
-          name="email"
-          onChange={ this.handleChange }
-          data-testid="input-gravatar-email"
-        />
-        <button
-          type="button"
-          data-testid="btn-settings"
-          onClick={ () => history.push('/config') }
-        >
-          Configurar
-        </button>
-        <button
-          type="button"
-          disabled={ btnDisabled }
-          data-testid="btn-play"
-          onClick={ this.onClickChange }
-        >
-          Play
-        </button>
-      </form>
+      <div className="loginForm-container">
+        <form>
+          <h1>Trivia Game 2.0 Turbo</h1>
+          <fieldset className="flex two">
+            <label htmlFor="name">
+              Nome:
+              <input
+                type="text"
+                placeholder="Insira seu nome"
+                name="name"
+                onChange={ this.handleChange }
+                data-testid="input-player-name"
+              />
+            </label>
+            <label htmlFor="email">
+              E-mail:
+              <input
+                type="email"
+                placeholder="Insira seu email"
+                name="email"
+                onChange={ this.handleChange }
+                data-testid="input-gravatar-email"
+              />
+            </label>
+          </fieldset>
+          <hr />
+          <fieldset className="flex one">
+            <button
+              type="button"
+              className="warning"
+              data-testid="btn-settings"
+              onClick={ () => history.push('/config') }
+            >
+              Configurar
+            </button>
+            <button
+              type="button"
+              className="success"
+              disabled={ btnDisabled }
+              data-testid="btn-play"
+              onClick={ this.onClickChange }
+            >
+              Play
+            </button>
+          </fieldset>
+        </form>
+      </div>
     );
   }
 }

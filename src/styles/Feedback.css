@@ -1,0 +1,21 @@
+button {
+  width: 130px;
+}
+
+.feedback {
+  background-color: #9AC2FE;
+  border-radius: 5%;
+  margin-left: 33%;
+  margin-right: 33%;
+  position: relative;
+  text-align: center;
+  width: 34%;
+}
+
+.ranking-btns {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}

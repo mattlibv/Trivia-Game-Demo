@@ -47,7 +47,7 @@ describe('Testa Header', () => {
         const userName = screen.getByTestId('header-player-name');
         expect(userName).toHaveTextContent('teste')
         const score = screen.getByTestId('header-score');
-        expect(score.innerHTML).toBe('0');
+        expect(score.innerHTML).toBe('Pontuação: 0');
         expect(mockAPI).toHaveBeenCalledTimes(2);
       })
   })
